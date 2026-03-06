@@ -15,6 +15,14 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks.jar {
+    archiveBaseName = "myname"
+    archiveVersion = ""
+
+    manifest {
+        attributes["Main-Class"] = "Main"
+    }
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory()) it else zipTree(it) })
 }
